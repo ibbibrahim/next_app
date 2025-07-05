@@ -1,5 +1,35 @@
 # Test Coding Assignment
 
+A simple web app allowing users to send emails, styled in the spirit of Apple Mail.
+
+---
+
+## ✅ Features Implemented
+
+✅ Sidebar with list of emails in Apple Mail style  
+✅ Search bar with backend filtering and 500ms debounce  
+✅ Displays selected email details  
+✅ Compose new email dialog with:
+- To
+- CC
+- BCC
+- Subject
+- Body
+
+✅ UI built with MUI  
+✅ Backend built with Fastify, SQLite, and Knex.js  
+✅ Seed data for quick testing
+
+---
+
+## Screenshots
+
+Below is a screenshot showing the UI of the application:
+
+![Email App Filtering](./frontend/public/screenshots/test_2.png)
+![Email App Layout](./frontend/public/screenshots/test_1.png)
+![Email App Compose Page](./frontend/public/screenshots/test_compose.png)
+
 # Assignment:
 Develop a simple web app allowing users to send emails. The app should have the following features:  
 ## 1. Sidebar

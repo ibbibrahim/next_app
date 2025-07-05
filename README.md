@@ -44,6 +44,7 @@ Below is a screenshot showing the UI of the application:
 ![Email App Filtering](./frontend/public/screenshots/test_2.png)
 ![Email App Layout](./frontend/public/screenshots/test_1.png)
 ![Email App Compose Page](./frontend/public/screenshots/test_compose.png)
+![Email App Delete mail](./frontend/public/screenshots/test_delete.png)
 
 # Assignment:
 Develop a simple web app allowing users to send emails. The app should have the following features:  

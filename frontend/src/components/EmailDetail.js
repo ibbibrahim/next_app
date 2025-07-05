@@ -1,7 +1,22 @@
-import { Box, Typography, Paper, Divider, Grid } from '@mui/material';
-import { Email as EmailIcon, Person as PersonIcon, Schedule as ScheduleIcon } from '@mui/icons-material';
+import {
+  Box,
+  Typography,
+  Paper,
+  Divider,
+  Grid,
+  IconButton
+} from '@mui/material';
+import {
+  Email as EmailIcon,
+  Person as PersonIcon,
+  Schedule as ScheduleIcon,
+  Reply as ReplyIcon,
+  ReplyAll as ReplyAllIcon,
+  Forward as ForwardIcon,
+  Delete as DeleteIcon,
+} from '@mui/icons-material';
 
-export default function EmailDetail({ email }) {
+export default function EmailDetail({ email, onDelete }) {
   if (!email) {
     return (
       <Box
@@ -29,9 +44,8 @@ export default function EmailDetail({ email }) {
     );
   }
 
-  const formatDate = (dateString) => {
-    return new Date(dateString).toLocaleString();
-  };
+  const formatDate = (dateString) =>
+    new Date(dateString).toLocaleString();
 
   return (
     <Box
@@ -50,13 +64,22 @@ export default function EmailDetail({ email }) {
           background: '#fff',
           boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
           border: '1px solid #d0d0d0',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        <Box sx={{ mb: 3 }}>
+        {/* Header: Subject + Icon Toolbar */}
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            mb: 2,
+          }}
+        >
           <Typography
             variant="h5"
             sx={{
-              mb: 2,
               fontWeight: 600,
               color: '#333',
               fontFamily: `'SF Pro Display','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
@@ -64,73 +87,81 @@ export default function EmailDetail({ email }) {
           >
             {email.subject}
           </Typography>
-          <Grid container spacing={2} sx={{ mb: 2 }}>
-            <Grid item xs={12} sm={6}>
-              <Box
+          <Box>
+            <IconButton size="small">
+              <ReplyIcon />
+            </IconButton>
+            <IconButton size="small">
+              <ReplyAllIcon />
+            </IconButton>
+            <IconButton size="small">
+              <ForwardIcon />
+            </IconButton>
+            <IconButton
+              size="small"
+              onClick={() => onDelete(email.id)}
+            >
+              <DeleteIcon color="error" />
+            </IconButton>
+          </Box>
+        </Box>
+
+        {/* Metadata */}
+        <Grid container spacing={2} sx={{ mb: 2 }}>
+          <Grid item xs={12} sm={6}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
+              <PersonIcon sx={{ color: '#888' }} />
+              <Typography
+                variant="body2"
                 sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 1,
-                  mb: 1,
                   color: '#555',
+                  fontFamily: `'SF Pro Text','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
                 }}
               >
-                <PersonIcon sx={{ color: '#888' }} />
+                To: {email.to}
+              </Typography>
+            </Box>
+            {email.cc && (
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
                 <Typography
                   variant="body2"
-                  sx={{
-                    color: '#555',
-                    fontFamily: `'SF Pro Text','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
-                  }}
+                  sx={{ color: '#555' }}
                 >
-                  To: {email.to}
+                  CC: {email.cc}
                 </Typography>
               </Box>
-              {email.cc && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: '#555',
-                      fontFamily: `'SF Pro Text','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
-                    }}
-                  >
-                    CC: {email.cc}
-                  </Typography>
-                </Box>
-              )}
-              {email.bcc && (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, mb: 1 }}>
-                  <Typography
-                    variant="body2"
-                    sx={{
-                      color: '#555',
-                      fontFamily: `'SF Pro Text','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
-                    }}
-                  >
-                    BCC: {email.bcc}
-                  </Typography>
-                </Box>
-              )}
-            </Grid>
-            <Grid item xs={12} sm={6}>
+            )}
+            {email.bcc && (
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                <ScheduleIcon sx={{ color: '#888' }} />
                 <Typography
                   variant="body2"
-                  sx={{
-                    color: '#555',
-                    fontFamily: `'SF Pro Text','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
-                  }}
+                  sx={{ color: '#555' }}
                 >
-                  {formatDate(email.created_at)}
+                  BCC: {email.bcc}
                 </Typography>
               </Box>
-            </Grid>
+            )}
           </Grid>
-          <Divider sx={{ borderColor: '#e0e0e0' }} />
-        </Box>
-        <Box>
+          <Grid item xs={12} sm={6}>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+              <ScheduleIcon sx={{ color: '#888' }} />
+              <Typography
+                variant="body2"
+                sx={{
+                  color: '#555',
+                  fontFamily: `'SF Pro Text','-apple-system','BlinkMacSystemFont','Segoe UI','Roboto',sans-serif`,
+                }}
+              >
+                {formatDate(email.created_at)}
+              </Typography>
+            </Box>
+          </Grid>
+        </Grid>
+
+        <Divider sx={{ borderColor: '#e0e0e0', mb: 2 }} />
+
+        {/* Body */}
+        <Box sx={{ flexGrow: 1, overflowY: 'auto' }}>
           <Typography
             variant="body1"
             sx={{

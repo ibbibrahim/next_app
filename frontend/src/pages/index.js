@@ -102,6 +102,28 @@ export default function Home() {
     setSelectedEmail(newEmail);
   };
 
+  const handleDeleteEmail = async (emailId) => {
+    if (!window.confirm('Are you sure you want to delete this email?')) {
+      return;
+    }
+    try {
+      const res = await fetch(`http://localhost:3001/api/emails/${emailId}`, {
+        method: 'DELETE',
+      });
+      const result = await res.json();
+
+      if (result.success) {
+        setEmails((prev) => prev.filter((e) => e.id !== emailId));
+        setSelectedEmail(null);
+        alert('Email deleted successfully!');
+      } else {
+        alert(result.error || 'Failed to delete email');
+      }
+    } catch (e) {
+      alert('Failed to connect to server');
+    }
+  };
+
   const drawerWidth = 320;
 
   return (
@@ -243,7 +265,7 @@ export default function Home() {
           borderLeft: '1px solid #d0d0d0',
         }}
       >
-        <EmailDetail email={selectedEmail} />
+        <EmailDetail email={selectedEmail} onDelete={handleDeleteEmail} />
       </Box>
 
       {/* Compose Button */}

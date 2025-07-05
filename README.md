@@ -22,6 +22,21 @@ A simple web app allowing users to send emails, styled in the spirit of Apple Ma
 
 ---
 
+## 💡 Additional Notes (Extra Effort)
+
+I added delete functionality as an extra effort beyond the original assignment.  
+
+There are many other enhancements I could implement, like:
+- Editing emails
+- Pagination for large email lists
+- User authentication
+- Rich text editor for composing emails
+- Tagging or categorizing emails
+- Responsive mobile views
+
+…but due to time constraints, I focused on the main requirements and a few extras to demonstrate additional capabilities.
+
+
 ## Screenshots
 
 Below is a screenshot showing the UI of the application:
